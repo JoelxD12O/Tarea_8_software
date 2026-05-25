@@ -40,17 +40,39 @@ python -m coverage xml -o coverage.xml
 ```
 
 ## Diagrama de Casos de Uso
-```mermaid
-usecaseDiagram
-    actor "Restaurante" as R
-    actor "Sistema de Recompensas" as S
-    
-    R --> (Registrar Consumo)
-    (Registrar Consumo) ..> (Publicar Evento) : include
-    (Publicar Evento) --> (Broker de Mensajería)
-    (Broker de Mensajería) --> (Consumir Evento)
-    (Consumir Evento) ..> (Calcular Puntos) : include
-    (Consumir Evento) ..> (Actualizar Cuenta) : include
-    (Calcular Puntos) --> S
-    (Actualizar Cuenta) --> S
+![alt text](image.png)
+
+### Código en PlantUML:
+```plantuml
+@startuml
+skinparam actorStyle awesome
+
+actor "Restaurante" as R
+actor "Sistema de Recompensas" as S
+cloud "Broker (RabbitMQ)" as Broker
+
+package "Programa de Recompensas" {
+    usecase "Registrar Consumo de Cena" as UC1
+    usecase "Publicar Evento de Consumo" as UC2
+    usecase "Procesar Beneficios de Cliente" as UC3
+    usecase "Calcular Puntos y Cashback" as UC4
+    usecase "Actualizar Cuenta de Recompensas" as UC5
+}
+
+R --> UC1
+UC1 ..> UC2 : <<include>>
+UC2 --> Broker
+
+Broker --> UC3
+UC3 ..> UC4 : <<include>>
+UC3 ..> UC5 : <<include>>
+UC4 --> S
+UC5 --> S
+
+note right of Broker
+  Desacopla el sistema del restaurante
+  del sistema de recompensas
+end note
+
+@enduml
 ```
