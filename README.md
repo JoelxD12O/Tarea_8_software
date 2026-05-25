@@ -76,3 +76,11 @@ end note
 
 @enduml
 ```
+
+
+## Análisis de SonarQube
+El proyecto ha sido analizado en **SonarQube**, cumpliendo con todas las métricas de calidad y alcanzando una cobertura de pruebas superior al 85%.
+
+**Enlace del Proyecto:** [Dashboard SonarQube - Joel_Cayllahua_t1](https://sonarqube.ingsoftware.lat/dashboard?id=Joel_Cayllahua_t1)
+
+![Evidencia SonarQube](image-1.png)
